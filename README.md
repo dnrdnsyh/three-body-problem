@@ -57,7 +57,40 @@ cd laravel
 composer install
 php artisan key:generate
 php artisan migrate --seed
-php artisan serve --port=8001
+php artisan serve
+```
+
+Add config for laravel host address and port
+```bash
+php artisan make:command CustomServeCommand
+```
+
+Delete the old config and replace with
+```bash
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Foundation\Console\ServeCommand;
+use Symfony\Component\Console\Input\InputOption;
+
+class CustomServeCommand extends ServeCommand
+{
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+        ['host', null, InputOption::VALUE_OPTIONAL, 'The host address to serve the application on.', '**192.168.56.49**'],
+        ['port', null, InputOption::VALUE_OPTIONAL, 'The port to serve the application on.', **8001**],
+        ['tries', null, InputOption::VALUE_OPTIONAL, 'The max number of ports to attempt to serve from', 10],
+        ['no-reload', null, InputOption::VALUE_NONE, 'Do not reload the development server on .env file changes'],
+        ];
+    }
+}
 ```
 
 ### 🐹 Go API (Port 8080)
