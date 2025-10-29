@@ -13,13 +13,48 @@ devops/
 └── README.md        # This file
 ```
 
+## How to Install Apps
+Git install
+```bash
+apt update
+apt install git
+git --version
+```
+
+mysql install
+```bash
+apt install mysql-server
+mysql_secure_installation
+systemctl status mysql
+```
+
+create database
+```bash
+mysql
+create database if not exists laravel;
+show databases;
+create user 'dian’@’localhost' identified by 'Q@eqwe123';
+grant all privileges on *.* to ‘dian’@’localhost’;
+SELECT user, host FROM mysql.user;
+flush privileges;
+exit;
+```
+
+Git Clone
+```bash
+mkdir -p /var/www/three-body-problem
+cd /var/www/three-body-problem
+git clone https://github.com/dnrdnsyh/three-body-problem.git
+```
+
+
+
 ## 🚀 How to Run Applications
 
 ### 🐘 Laravel API (Port 8001)
 ```bash
 cd laravel
 composer install
-cp .env.example .env
 php artisan key:generate
 php artisan migrate --seed
 php artisan serve --port=8001
@@ -28,7 +63,6 @@ php artisan serve --port=8001
 ### 🐹 Go API (Port 8080)
 ```bash
 cd go
-cp .env.example .env
 go mod tidy
 go run main.go
 ```
