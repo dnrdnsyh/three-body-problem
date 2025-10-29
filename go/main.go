@@ -13,6 +13,7 @@ import (
 
 	"github.com/joho/godotenv"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/rs/cors"
 )
 
 // Product represents a product in the database
@@ -350,12 +351,15 @@ func main() {
 	http.HandleFunc("/api/products", productsHandler)
 	http.HandleFunc("/api/products/", productHandler) // Handle /api/products/{id}
 
-	log.Println("Go Products API Server is running on http://localhost:8080")
+	log.Println("Go Products API Server is running on http://192.168.56.49:8080")
 	log.Println("Endpoints:")
 	log.Println("  GET /api/products     - Get all products")
 	log.Println("  GET /api/products/{id} - Get product by ID")
+
+	c := cors.Default()
+	handler := c.Handler(http.DefaultServerMux)
 	
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe("192.168.56.49:8080", handler)
 	if err != nil {
 		log.Fatalf("Server failed: %s", err)
 	}
